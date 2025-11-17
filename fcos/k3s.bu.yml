@@ -1,6 +1,33 @@
 variant: fcos
 version: 1.5.0
 
+passwd:
+  users:
+    - name: core
+      groups: ["wheel"]
+      password_hash: "$6$hJS0xT9Qx8nRMOPT$JbkBmRBa8y9gclKSP0LWK0NVwYK3SVln7i.2iYILNqoc0H14qzMoGAn8l.fTz4NLWMxNJ666gGsz5/dSwCOXT1"
+
+systemd:
+  units:
+    - name: sshd.service
+      enabled: true
+
+    - name: k3s-install.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Install and start k3s (single node)
+        Wants=network-online.target
+        After=network-online.target
+
+        [Service]
+        Type=oneshot
+        ExecStart=/opt/k3s-install.sh --write-kubeconfig-mode 644 --disable traefik
+        RemainAfterExit=yes
+
+        [Install]
+        WantedBy=multi-user.target
+
 storage:
   files:
     - path: /etc/hostname
@@ -12,23 +39,3 @@ storage:
       mode: 0755
       contents:
         source: https://get.k3s.io
-
-systemd:
-  units:
-    - name: k3s-install.service
-      enabled: true
-      contents: |
-        [Unit]
-        Description=Install and start k3s (single node)
-        Wants=network-online.target
-        After=network-online.target
-
-        [Service]
-        Type=oneshot
-        ExecStart=/opt/k3s-install.sh
-        # Example: pass install flags here
-        # ExecStart=/opt/k3s-install.sh --write-kubeconfig-mode 644 --disable traefik
-        RemainAfterExit=yes
-
-        [Install]
-        WantedBy=multi-user.target
