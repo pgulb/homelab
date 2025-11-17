@@ -1,6 +1,6 @@
 {
   "ignition": {
-    "version": "3.4.0"
+    "version": "3.5.0"
   },
   "passwd": {
     "users": [
@@ -9,8 +9,8 @@
           "wheel"
         ],
         "name": "lab",
-        "passwordHash": "$6$35ODAdJ9yQq6SZKM$vefL39du/eIsWYsUDz2LJzl9PYFOAbEhIlWrOYQ0yP/9BZU3PJITjDvIwa5SYykFThxzfon0qCU7num5pPm6e.",
-        "shell": "/usr/bin/bash"
+        "passwordHash": "$y$j9T$GlrCmkwuStoSEnLded4rU0$in91mGgy0VqbjJdwJJ9bobYgKOqP9XvTnfHEZtTFC71",
+        "shell": "/bin/bash"
       }
     ]
   },

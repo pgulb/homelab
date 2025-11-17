@@ -1,12 +1,12 @@
 variant: fcos
-version: 1.5.0
+version: 1.6.0
 
 passwd:
   users:
     - name: lab
       groups: ["wheel"]
-      shell: /usr/bin/bash
-      password_hash: "$6$35ODAdJ9yQq6SZKM$vefL39du/eIsWYsUDz2LJzl9PYFOAbEhIlWrOYQ0yP/9BZU3PJITjDvIwa5SYykFThxzfon0qCU7num5pPm6e."
+      shell: /bin/bash
+      password_hash: "$y$j9T$GlrCmkwuStoSEnLded4rU0$in91mGgy0VqbjJdwJJ9bobYgKOqP9XvTnfHEZtTFC71"
 
 systemd:
   units:
