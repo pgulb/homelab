@@ -17,3 +17,7 @@ tasks:
         docker run --security-opt label=disable --pull=always --rm -v ./iso:/data -w /data \
         quay.io/coreos/coreos-installer:release download -s stable -p metal -f iso
       - rm -f iso/*.sig
+  generate-password-hash:
+    desc: "Generate pass hash using mkpasswd"
+    cmds:
+      - docker run -ti --rm quay.io/coreos/mkpasswd --method=yescrypt
