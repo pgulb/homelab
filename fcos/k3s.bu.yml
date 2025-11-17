@@ -19,20 +19,22 @@ systemd:
             ExecStartPre=/usr/bin/mkdir -p /etc/ssh/sshd_config.d
             ExecStartPre=/usr/bin/bash -c 'echo "PasswordAuthentication yes" > /etc/ssh/sshd_config.d/20-password-auth.conf'
 
-    - name: k3s-install.service
+    - name: k3s.service
       enabled: true
       contents: |
         [Unit]
-        Description=Install and start k3s (single node)
+        Description=K3s (single node)
         Wants=network-online.target
         After=network-online.target
 
         [Service]
-        Type=oneshot
-        ExecStart=/opt/k3s-install.sh --write-kubeconfig-mode 644 --disable traefik
-        StandardOutput=append:/var/log/k3s-install.log
-        StandardError=append:/var/log/k3s-install.log
-        RemainAfterExit=yes
+        Type=simple
+        ExecStartPre=/usr/bin/bash /opt/k3s-install.sh
+        ExecStart=/usr/local/bin/k3s server --write-kubeconfig-mode 644 --disable traefik
+        Restart=on-failure
+        RestartSec=5
+        StandardOutput=journal
+        StandardError=journal
 
         [Install]
         WantedBy=multi-user.target
@@ -47,4 +49,13 @@ storage:
     - path: /opt/k3s-install.sh
       mode: 0755
       contents:
-        source: https://get.k3s.io
+        inline: |
+          #!/usr/bin/env bash
+          set -e
+          if [ ! -x /usr/local/bin/k3s ]; then
+              echo "Installing K3s static binary..."
+              curl -Lo /usr/local/bin/k3s https://github.com/k3s-io/k3s/releases/latest/download/k3s
+              chmod +x /usr/local/bin/k3s
+          else
+              echo "K3s binary already exists, skipping install."
+          fi
