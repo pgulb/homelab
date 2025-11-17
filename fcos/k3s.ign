@@ -1,0 +1,33 @@
+{
+  "ignition": {
+    "version": "3.4.0"
+  },
+  "storage": {
+    "files": [
+      {
+        "path": "/etc/hostname",
+        "contents": {
+          "compression": "",
+          "source": "data:,homelab"
+        },
+        "mode": 420
+      },
+      {
+        "path": "/opt/k3s-install.sh",
+        "contents": {
+          "source": "https://get.k3s.io"
+        },
+        "mode": 493
+      }
+    ]
+  },
+  "systemd": {
+    "units": [
+      {
+        "contents": "[Unit]\nDescription=Install and start k3s (single node)\nWants=network-online.target\nAfter=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/opt/k3s-install.sh\n# Example: pass install flags here\n# ExecStart=/opt/k3s-install.sh --write-kubeconfig-mode 644 --disable traefik\nRemainAfterExit=yes\n\n[Install]\nWantedBy=multi-user.target\n",
+        "enabled": true,
+        "name": "k3s-install.service"
+      }
+    ]
+  }
+}

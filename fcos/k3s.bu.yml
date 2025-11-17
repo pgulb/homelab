@@ -1,0 +1,34 @@
+variant: fcos
+version: 1.5.0
+
+storage:
+  files:
+    - path: /etc/hostname
+      mode: 0644
+      contents:
+        inline: "homelab"
+
+    - path: /opt/k3s-install.sh
+      mode: 0755
+      contents:
+        source: https://get.k3s.io
+
+systemd:
+  units:
+    - name: k3s-install.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Install and start k3s (single node)
+        Wants=network-online.target
+        After=network-online.target
+
+        [Service]
+        Type=oneshot
+        ExecStart=/opt/k3s-install.sh
+        # Example: pass install flags here
+        # ExecStart=/opt/k3s-install.sh --write-kubeconfig-mode 644 --disable traefik
+        RemainAfterExit=yes
+
+        [Install]
+        WantedBy=multi-user.target
