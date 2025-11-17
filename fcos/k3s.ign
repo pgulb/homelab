@@ -2,6 +2,18 @@
   "ignition": {
     "version": "3.4.0"
   },
+  "passwd": {
+    "users": [
+      {
+        "groups": [
+          "wheel"
+        ],
+        "name": "lab",
+        "passwordHash": "$6$35ODAdJ9yQq6SZKM$vefL39du/eIsWYsUDz2LJzl9PYFOAbEhIlWrOYQ0yP/9BZU3PJITjDvIwa5SYykFThxzfon0qCU7num5pPm6e.",
+        "shell": "/usr/bin/bash"
+      }
+    ]
+  },
   "storage": {
     "files": [
       {
@@ -24,7 +36,17 @@
   "systemd": {
     "units": [
       {
-        "contents": "[Unit]\nDescription=Install and start k3s (single node)\nWants=network-online.target\nAfter=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/opt/k3s-install.sh\n# Example: pass install flags here\n# ExecStart=/opt/k3s-install.sh --write-kubeconfig-mode 644 --disable traefik\nRemainAfterExit=yes\n\n[Install]\nWantedBy=multi-user.target\n",
+        "dropins": [
+          {
+            "contents": "[Service]\nExecStartPre=/usr/bin/mkdir -p /etc/ssh/sshd_config.d\nExecStartPre=/usr/bin/bash -c 'echo \"PasswordAuthentication yes\" \u003e /etc/ssh/sshd_config.d/20-password-auth.conf'\n",
+            "name": "10-password-auth.conf"
+          }
+        ],
+        "enabled": true,
+        "name": "sshd.service"
+      },
+      {
+        "contents": "[Unit]\nDescription=Install and start k3s (single node)\nWants=network-online.target\nAfter=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/opt/k3s-install.sh --write-kubeconfig-mode 644 --disable traefik\nStandardOutput=append:/var/log/k3s-install.log\nStandardError=append:/var/log/k3s-install.log\nRemainAfterExit=yes\n\n[Install]\nWantedBy=multi-user.target\n",
         "enabled": true,
         "name": "k3s-install.service"
       }
