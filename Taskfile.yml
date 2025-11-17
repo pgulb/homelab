@@ -10,3 +10,10 @@ tasks:
     desc: "Generate Ignition config using Butane"
     cmds:
       - butane --pretty --strict fcos/k3s.bu.yml > fcos/k3s.ign
+  download-fcos-iso:
+    desc: "Download FCOS ISO"
+    cmds:
+      -  |
+        docker run --security-opt label=disable --pull=always --rm -v ./iso:/data -w /data \
+        quay.io/coreos/coreos-installer:release download -s stable -p metal -f iso
+      - rm -f iso/*.sig
