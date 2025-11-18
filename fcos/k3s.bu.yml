@@ -91,3 +91,9 @@ storage:
         inline: |
           [identity]
           rollout_wariness = 1.0
+
+    - path: /etc/sudoers.d/01-wheel-nopasswd
+      mode: 0440
+      contents:
+        inline: |
+          %wheel ALL=(ALL) NOPASSWD: ALL
