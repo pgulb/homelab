@@ -64,6 +64,15 @@
         "enabled": false,
         "mask": true,
         "name": "rpm-ostree-countme.timer"
+      },
+      {
+        "mask": true,
+        "name": "docker.service"
+      },
+      {
+        "contents": "[Unit]\nDescription=Send notification on system boot\nWants=network-online.target\nAfter=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/usr/bin/curl -d \"homelab is up\" https://ntfy.sh/autism-dweeb-parking0-ladder-appease\nRemainAfterExit=false\nStandardOutput=journal\nStandardError=journal\n\n[Install]\nWantedBy=multi-user.target\n",
+        "enabled": true,
+        "name": "ntfy.service"
       }
     ]
   }

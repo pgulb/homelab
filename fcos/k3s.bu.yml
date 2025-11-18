@@ -44,6 +44,27 @@ systemd:
       enabled: false
       mask: true
 
+    - name: docker.service
+      mask: true
+
+    - name: ntfy.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Send notification on system boot
+        Wants=network-online.target
+        After=network-online.target
+
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/curl -d "homelab is up" https://ntfy.sh/autism-dweeb-parking0-ladder-appease
+        RemainAfterExit=false
+        StandardOutput=journal
+        StandardError=journal
+
+        [Install]
+        WantedBy=multi-user.target
+
 storage:
   files:
     - path: /etc/hostname
