@@ -34,5 +34,11 @@ tasks:
   get-kubeconfig:
     desc: "Get k3s kubeconfig and merge it"
     cmds:
+      - ssh-keygen -f ~/.ssh/known_hosts -R '192.168.1.30' || true
       - scp -i ~/.ssh/hmlb lab@192.168.1.30:/etc/rancher/k3s/k3s.yaml ~/.kube/homelab
       - sed -i 's/127.0.0.1/192.168.1.30/g' ~/.kube/homelab
+  ssh:
+    desc: "SSH into homelab"
+    cmds:
+      - ssh-keygen -f ~/.ssh/known_hosts -R '192.168.1.30' || true
+      - ssh -o StrictHostKeyChecking=no -i ~/.ssh/hmlb lab@192.168.1.30
