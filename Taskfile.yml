@@ -31,3 +31,8 @@ tasks:
       -  |
         docker run --security-opt label=disable --pull=always --rm -v ./iso:/data -w /data \
         quay.io/coreos/coreos-installer:release iso ignition show fedora-coreos.iso
+  get-kubeconfig:
+    desc: "Get k3s kubeconfig and merge it"
+    cmds:
+      - scp -i ~/.ssh/hmlb lab@192.168.1.30:/etc/rancher/k3s/k3s.yaml ~/.kube/homelab
+      - sed -i 's/127.0.0.1/192.168.1.30/g' ~/.kube/homelab
