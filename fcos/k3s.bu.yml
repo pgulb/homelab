@@ -18,7 +18,7 @@ systemd:
           contents: |
             [Service]
             ExecStartPre=/usr/bin/mkdir -p /etc/ssh/sshd_config.d
-            ExecStartPre=/usr/bin/bash -c 'echo "PasswordAuthentication yes" > /etc/ssh/sshd_config.d/20-password-auth.conf'
+            ExecStartPre=/usr/bin/bash -c 'echo "PasswordAuthentication no" > /etc/ssh/sshd_config.d/20-password-auth.conf'
 
     - name: k3s.service
       enabled: true

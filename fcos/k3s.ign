@@ -41,7 +41,7 @@
       {
         "dropins": [
           {
-            "contents": "[Service]\nExecStartPre=/usr/bin/mkdir -p /etc/ssh/sshd_config.d\nExecStartPre=/usr/bin/bash -c 'echo \"PasswordAuthentication yes\" \u003e /etc/ssh/sshd_config.d/20-password-auth.conf'\n",
+            "contents": "[Service]\nExecStartPre=/usr/bin/mkdir -p /etc/ssh/sshd_config.d\nExecStartPre=/usr/bin/bash -c 'echo \"PasswordAuthentication no\" \u003e /etc/ssh/sshd_config.d/20-password-auth.conf'\n",
             "name": "10-password-auth.conf"
           }
         ],
