@@ -40,6 +40,10 @@ systemd:
         [Install]
         WantedBy=multi-user.target
 
+    - name: rpm-ostree-countme.timer
+      enabled: false
+      mask: true
+
 storage:
   files:
     - path: /etc/hostname

@@ -59,6 +59,11 @@
         "contents": "[Unit]\nDescription=K3s (single node)\nWants=network-online.target\nAfter=network-online.target\n\n[Service]\nType=simple\nExecStartPre=/usr/bin/bash /opt/k3s-install.sh\nExecStart=/usr/local/bin/k3s server --write-kubeconfig-mode 644 --disable traefik\nRestart=on-failure\nRestartSec=5\nStandardOutput=journal\nStandardError=journal\n\n[Install]\nWantedBy=multi-user.target\n",
         "enabled": true,
         "name": "k3s.service"
+      },
+      {
+        "enabled": false,
+        "mask": true,
+        "name": "rpm-ostree-countme.timer"
       }
     ]
   }
