@@ -60,3 +60,9 @@ storage:
           else
               echo "K3s binary already exists, skipping install."
           fi
+
+    - path: /etc/zincati/config.d/51-rollout-wariness.toml
+      contents:
+        inline: |
+          [identity]
+          rollout_wariness = 1.0

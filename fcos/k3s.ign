@@ -33,6 +33,13 @@
           "source": "data:;base64,H4sIAAAAAAAC/2yPMW7DMAxFd53ixx1bW0O29gRFe4OiA20zERFGMkS6TW5fyF46ZCLA//Dx/tMhrlbjKDly/sFIloKxo+cgJ3zhgP6GDdEykW7g5Wj4foMnzgEAeEoF3Xs2J1XJZ3wcDebkMmGUTPU+DEO3odNaFf1neVSZ3Bd7jfEsntZxmMq1vXsp7cTKymRsUcnZPM7lN2uhuYV7dbqWGc+PbAOr8T/V5reLgbQyzXfwTcztBXaRZWkbZJ8zdOEk4S8AAP//+fRhWiYBAAA="
         },
         "mode": 493
+      },
+      {
+        "path": "/etc/zincati/config.d/51-rollout-wariness.toml",
+        "contents": {
+          "compression": "",
+          "source": "data:,%5Bidentity%5D%0Arollout_wariness%20%3D%201.0%0A"
+        }
       }
     ]
   },
