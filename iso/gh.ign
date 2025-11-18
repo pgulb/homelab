@@ -1,0 +1,6 @@
+variant: fcos
+version: 1.6.0
+ignition:
+  config:
+    replace:
+      source: https://raw.githubusercontent.com/pgulb/homelab/refs/heads/main/fcos/k3s.ign
