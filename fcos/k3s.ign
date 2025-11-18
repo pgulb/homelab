@@ -9,7 +9,9 @@
           "wheel"
         ],
         "name": "lab",
-        "passwordHash": "$y$j9T$GlrCmkwuStoSEnLded4rU0$in91mGgy0VqbjJdwJJ9bobYgKOqP9XvTnfHEZtTFC71",
+        "sshAuthorizedKeys": [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDePN3gS12p0WDg0/9DkDZYwfMfb73qT3uW/yGiH+u57 hmlb"
+        ],
         "shell": "/bin/bash"
       }
     ]
