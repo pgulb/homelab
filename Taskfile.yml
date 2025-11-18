@@ -21,3 +21,9 @@ tasks:
     desc: "Generate pass hash using mkpasswd"
     cmds:
       - docker run -ti --rm quay.io/coreos/mkpasswd --method=yescrypt
+  embed-ignition:
+    desc: "Embed ignition file pointing to Github hosted .ign into ISO"
+    cmds:
+      -  |
+        docker run --security-opt label=disable --pull=always --rm -v ./iso:/data -w /data \
+        quay.io/coreos/coreos-installer:release iso ignition embed -i gh.ign fedora-coreos.iso
