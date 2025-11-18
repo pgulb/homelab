@@ -27,10 +27,13 @@ tasks:
     cmds:
       -  |
         docker run --security-opt label=disable --pull=always --rm -v ./iso:/data -w /data \
-        quay.io/coreos/coreos-installer:release iso ignition embed -i gh.ign fedora-coreos.iso -f
-      -  |
-        docker run --security-opt label=disable --pull=always --rm -v ./iso:/data -w /data \
-        quay.io/coreos/coreos-installer:release iso ignition show fedora-coreos.iso
+        quay.io/coreos/coreos-installer:release iso customize \
+        --dest-ignition gh.ign \
+        --dest-device /dev/sda \
+        --post-install post_install.sh \
+        -f \
+        fedora-coreos.iso
+
   get-kubeconfig:
     desc: "Get k3s kubeconfig and merge it"
     cmds:
