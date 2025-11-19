@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: healthcheck
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: healthcheck
+            image: curlimages/curl:8.17.0
+            args:
+            - -f
+            - https://pioter-kuma.zeabur.app/api/push/vZs5inDYPp?status=up&msg=OK&ping=
+          restartPolicy: Never
+      activeDeadlineSeconds: 60
+      backoffLimit: 1
