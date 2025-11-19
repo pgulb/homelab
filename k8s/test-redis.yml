@@ -1,0 +1,54 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: test-redis
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: test-redis # has to match .spec.template.metadata.labels
+  serviceName: "test-redis"
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: test-redis # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: test-redis
+        image: redis:alpine
+        ports:
+        - containerPort: 6379
+          name: test-redis
+        volumeMounts:
+        - name: data
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+---
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-redis
+  namespace: default
+spec:
+  selector:
+    app: test-redis
+  type: NodePort
+  ports:
+  - name: test-redis
+    protocol: TCP
+    port: 6379
+    targetPort: 6379
+    nodePort: 30000
+---
