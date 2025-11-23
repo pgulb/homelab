@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pihole
+spec:
+  selector:
+    matchLabels:
+      app: pihole
+  serviceName: pihole
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pihole
+    spec:
+      containers:
+      - name: pihole
+        image: pihole/pihole:latest
+        ports:
+        - containerPort: 443
+          name: https-access
+        - containerPort: 53
+          protocol: TCP
+          hostIP: 192.168.1.30
+          hostPort: 53
+          name: dns-tcp
+        - containerPort: 53
+          protocol: UDP
+          hostIP: 192.168.1.30
+          hostPort: 53
+          name: dns-udp
+        volumeMounts:
+        - name: etc-pihole
+          mountPath: /etc/pihole
+  volumeClaimTemplates:
+  - metadata:
+      name: etc-pihole
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole-https
+spec:
+  type: NodePort
+  selector:
+    app: pihole
+  ports:
+  - port: 443
+    targetPort: 443
+    nodePort: 30001
