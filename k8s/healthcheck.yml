@@ -15,8 +15,8 @@ spec:
           - name: healthcheck
             image: curlimages/curl:8.17.0
             args:
-            - -f
-            - https://pioter-kuma.zeabur.app/api/push/vZs5inDYPp?status=up&msg=OK&ping=
+            - -fs
+            - 'https://pioter-kuma.zeabur.app/api/push/vZs5inDYPp?status=up&msg=OK&ping='
           restartPolicy: OnFailure
       activeDeadlineSeconds: 15
       backoffLimit: 3
